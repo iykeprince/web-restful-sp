@@ -2,9 +2,7 @@ package com.thinkltp.webrestful.controller;
 
 import com.thinkltp.webrestful.model.CloudVendor;
 import com.thinkltp.webrestful.service.CloudVendorService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -17,7 +15,12 @@ public class CloudVendorController {
 
     @GetMapping("{vendorId}")
     public CloudVendor getCloudVendor(@PathVariable("vendorId") String vendorId) {
-       return this.cloudVendorService.getCloudVendor(vendorId);
+        return this.cloudVendorService.getCloudVendor(vendorId);
+//        return ResponseHandler.responseBuilder(
+//                "Requested Vendor Details are given here",
+//                HttpStatus.OK,
+//                this.cloudVendorService.getCloudVendor(vendorId)
+//        );
     }
 
     @GetMapping

@@ -1,5 +1,6 @@
 package com.thinkltp.webrestful.service.impl;
 
+import com.thinkltp.webrestful.exception.CloudVendorNotFoundException;
 import com.thinkltp.webrestful.model.CloudVendor;
 import com.thinkltp.webrestful.repository.CloudVendorRepository;
 import com.thinkltp.webrestful.service.CloudVendorService;
@@ -11,8 +12,11 @@ import java.util.List;
 @Service
 public class CloudVendorServiceImpl implements CloudVendorService {
 
-    @Autowired
     CloudVendorRepository cloudVendorRepository;
+
+    public CloudVendorServiceImpl(CloudVendorRepository cloudVendorRepository) {
+        this.cloudVendorRepository = cloudVendorRepository;
+    }
 
     @Override
     public String createCloudVendor(CloudVendor cloudVendor) {
@@ -35,6 +39,9 @@ public class CloudVendorServiceImpl implements CloudVendorService {
 
     @Override
     public CloudVendor getCloudVendor(String cloudVendorId) {
+        if(cloudVendorRepository.findById(cloudVendorId).isEmpty()) {
+            throw new CloudVendorNotFoundException("Requested Cloud vendor does not exist");
+        }
         return cloudVendorRepository.findById(cloudVendorId).get();
     }
 
